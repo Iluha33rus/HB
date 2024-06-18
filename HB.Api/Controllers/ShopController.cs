@@ -17,9 +17,12 @@ namespace HB.Api.Controllers
             var list = await useCase.Execute(ct);
             return list.Select(t => new Models.Shop
             {
+                ShopId = t.ShopId,
                 Name = t.Name,
+                UserId = t.UserId,
                 Description = t.Description,
                 RegisteredAt = t.RegisteredAt,
+
             });
         }
 
@@ -33,6 +36,7 @@ namespace HB.Api.Controllers
             await useCase.RegisterShop(shop.Name, shop.Description, shop.UserId, ct);
             return Ok(new Models.Shop
             {
+                ShopId = shop.ShopId,
                 Name = shop.Name,
                 Description = shop.Description,
                 RegisteredAt = shop.RegisteredAt,

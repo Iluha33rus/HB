@@ -1,6 +1,7 @@
 using HB.Core.GuidFactory;
 using HB.Core.MomentFactory;
 using HB.Core.UseCases.Item.AddItemToShop;
+using HB.Core.UseCases.Item.GetItems;
 using HB.Core.UseCases.Shop.AddShop;
 using HB.Core.UseCases.Shop.GetAllShop;
 using HB.Core.UseCases.User.GetAllUsers;
@@ -24,8 +25,10 @@ builder.Services.AddScoped<IGuidFactory, GuidFactory>();
 builder.Services.AddScoped<IAddItemToShopUseCase, AddItemToShopUseCase>();
 builder.Services.AddScoped<IAddShopUseCase, AddShopUseCase>();
 builder.Services.AddScoped<IGetAllShopsUseCase, GetAllShopsUseCase>();
+builder.Services.AddScoped<IGetItemsUseCase, GetItemsUseCase>();
 var app = builder.Build();
-app.Services.GetRequiredService<HwContext>().Database.Migrate();
+
+//app.Services.GetRequiredService<HwContext>().Database.Migrate();
 
 if (app.Environment.IsDevelopment())
 {
