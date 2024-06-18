@@ -39,7 +39,7 @@ namespace HB.Core.UseCases.Item.AddItemToShop
                     Description = t.Description,
                     Price = t.Price,
                     IsHave = t.IsHave,
-                    CountItem = t.CountItem,
+                    Count = t.CountItem,
                     ShopId = t.ShopId,
                     ItemAdded = t.ItemAdded
                 }).FirstAsync(cancellationToken);

@@ -20,6 +20,7 @@ namespace HB.Api.Controllers
             var list = await useCase.Execute(ct);
             return list.Select(t => new Models.User
             {
+                UserId = t.UserId,
                 Name = t.Name,
                 SurName = t.Surname,
                 Mail = t.Email
@@ -33,12 +34,13 @@ namespace HB.Api.Controllers
             [FromServices] IRegisterUserUseCase useCase,
             CancellationToken ct)
         {
-            var s = await useCase.RegisterUser(user.Name, user.SurName, user.Mail, ct);
+            await useCase.RegisterUser(user.Name, user.SurName, user.Mail, ct);
             return Ok(new Models.User
             {
-                Name = s.Name,
-                SurName = s.Surname,
-                Mail = s.Email
+                UserId = user.UserId,
+                Name = user.Name,
+                SurName = user.SurName,
+                Mail = user.Mail
             });
         }
     }

@@ -1,7 +1,7 @@
-﻿using HB.Core.UseCases.Item.AddItemToShop;
-using HB.Storage;
+﻿using HB.Api.Models;
+using HB.Core.UseCases.Item.AddItemToShop;
+using HB.Core.UseCases.Item.GetItems;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HB.Api.Controllers
 {
@@ -9,26 +9,25 @@ namespace HB.Api.Controllers
     [Route("[controller]")]
     public class ItemController : ControllerBase
     {
+        //TODO: сделать выборку по наименованию товара, а так же добавить категории товаров
         [HttpGet(nameof(GetAllItems))]
-        [ProducesResponseType(200, Type = typeof(Models.Item[]))]
-        public async Task<IActionResult> GetAllItems(
-            HwContext dbcontext,
+        [ProducesResponseType(200, Type = typeof(ResponseItem[]))]
+        public async Task<IEnumerable<ResponseItem>> GetAllItems(
+            string? shopName,
+            [FromServices] IGetItemsUseCase useCase,
             CancellationToken ct)
         {
-            var list = await dbcontext.Items.ToArrayAsync(ct);
+            var list = await useCase.Execute(shopName,ct);
 
-            var result = (list
-                 .Select(f => new Models.Item
-                 {
-                     Name = f.Name,
-                     Description = f.Description,
-                     Price = f.Price,
-                     IsHave = f.IsHave,
-                     CountItem = f.CountItem,
-                     ShopId = f.ShopId,
-
-                 }));
-            return Ok(result);
+            return list.Select(t => new ResponseItem
+            {
+                Name = t.Name,
+                Description = t.Description,
+                Price = t.Price,
+                IsHave = t.IsHave,
+                Count = t.Count,
+                ShopName = t.ShopName,
+            });
         }
         [HttpPost(nameof(AddItemToShop))]
         public async Task<IActionResult> AddItemToShop(

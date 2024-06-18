@@ -7,6 +7,7 @@
         public decimal Price { get; set; }
         public bool IsHave { get; set; }
         public int CountItem { get; set; }
-        public required Guid ShopId { get; set; }
+        public Guid ShopId { get; set; }
+        public string ShopName { get; set; } = string.Empty; 
     }
 }

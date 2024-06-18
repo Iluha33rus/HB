@@ -14,7 +14,7 @@ namespace HB.Storage
         public string? Description { get; set; }
         public required Guid UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public User? Seller { get; set; } //TODO: сделать тест на создателя магазина
+        public User? Seller { get; set; } 
         [InverseProperty(nameof(Item.Shop))]
         public Collection<Item>? Items { get; set; }
     }
